@@ -11,8 +11,19 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"hash"
 	"strconv"
 	"strings"
+)
+
+// randRead and pbkdf2Key are indirection seams over crypto/rand and
+// crypto/pbkdf2 so their (otherwise unreachable) error paths are exercisable in
+// tests. Production always uses the standard-library implementations.
+var (
+	randRead  = rand.Read
+	pbkdf2Key = func(h func() hash.Hash, password string, salt []byte, iter, keyLen int) ([]byte, error) {
+		return pbkdf2.Key(h, password, salt, iter, keyLen)
+	}
 )
 
 // This file implements the pure-crypto side of PostgreSQL authentication: the
@@ -67,7 +78,7 @@ func NewSCRAMClientWithNonce(user, password, clientNonce string) *SCRAMClient {
 // randomNonce returns a base64 client nonce from crypto/rand.
 func randomNonce() (string, error) {
 	var buf [18]byte
-	if _, err := rand.Read(buf[:]); err != nil {
+	if _, err := randRead(buf[:]); err != nil {
 		return "", err
 	}
 	return base64.StdEncoding.EncodeToString(buf[:]), nil
@@ -107,7 +118,7 @@ func (c *SCRAMClient) Final(serverFirst []byte) ([]byte, error) {
 		return nil, errors.New("pg: SCRAM iteration count invalid")
 	}
 
-	saltedPassword, err := pbkdf2.Key(sha256.New, c.password, salt, iters, sha256.Size)
+	saltedPassword, err := pbkdf2Key(sha256.New, c.password, salt, iters, sha256.Size)
 	if err != nil {
 		return nil, fmt.Errorf("pg: SCRAM pbkdf2: %w", err)
 	}
