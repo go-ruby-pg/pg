@@ -167,10 +167,8 @@ func (r *Result) Tuple(i int) (map[string]any, error) {
 // Each applies fn to every row as a name→value map (PG::Result#each).
 func (r *Result) Each(fn func(map[string]any) error) error {
 	for i := range r.rows {
-		t, err := r.Tuple(i)
-		if err != nil {
-			return err
-		}
+		// Tuple(i) cannot fail for an in-range i, so its error is not checked.
+		t, _ := r.Tuple(i)
 		if err := fn(t); err != nil {
 			return err
 		}

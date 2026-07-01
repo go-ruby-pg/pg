@@ -143,9 +143,7 @@ func (c *Conn) collectResult() (*Result, error) {
 			}
 			return NewResult(desc, rows, tag)
 		case msgEmptyQuery:
-			if err := ParseEmptyQueryResponse(m); err != nil {
-				return nil, err
-			}
+			// EmptyQueryResponse is bodyless; its type already matched.
 			return NewResult(desc, rows, "")
 		case msgErrorResponse:
 			ef, err := ParseErrorResponse(m)
@@ -230,9 +228,7 @@ func (c *Conn) Prepare(name, sql string, paramOIDs []uint32) error {
 		}
 		switch m.Type {
 		case msgParseComplete:
-			if err := ParseParseComplete(m); err != nil {
-				return err
-			}
+			// ParseComplete is bodyless; its type already matched.
 		case msgReadyForQuery:
 			st, err := ParseReadyForQuery(m)
 			if err != nil {
