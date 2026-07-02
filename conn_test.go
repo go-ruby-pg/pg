@@ -210,9 +210,9 @@ func TestConnExecParamsError(t *testing.T) {
 
 func TestConnPrepareExecPrepared(t *testing.T) {
 	backend := concat(
-		frame('1', nil),           // ParseComplete (prepare)
-		readyForQuery('I'),        // after Sync
-		frame('2', nil),           // BindComplete (exec_prepared)
+		frame('1', nil),    // ParseComplete (prepare)
+		readyForQuery('I'), // after Sync
+		frame('2', nil),    // BindComplete (exec_prepared)
 		rowDescInt4("n"),
 		dataRow1("5"),
 		frame('C', []byte("SELECT 1\x00")),

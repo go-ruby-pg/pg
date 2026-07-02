@@ -93,10 +93,10 @@ func TestStartupSCRAM(t *testing.T) {
 	serverFinal := srv.finalMessage(clientFinal)
 
 	backend := concat(
-		auth(10, []byte("SCRAM-SHA-256\x00\x00")),       // AuthSASL
-		auth(11, serverFirst),                           // AuthSASLContinue
-		auth(12, serverFinal),                           // AuthSASLFinal
-		auth(0, nil),                                    // AuthOK
+		auth(10, []byte("SCRAM-SHA-256\x00\x00")), // AuthSASL
+		auth(11, serverFirst),                     // AuthSASLContinue
+		auth(12, serverFinal),                     // AuthSASLFinal
+		auth(0, nil),                              // AuthOK
 		readyForQuery('I'),
 	)
 	c := NewConn(newScript(backend))

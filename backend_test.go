@@ -125,12 +125,12 @@ func TestParseRowDescriptionAndDataRow(t *testing.T) {
 	var w writeBuf
 	w.int16(2)
 	w.string("id")
-	w.int32(100)  // table oid
-	w.int16(1)    // attr
-	w.int32(23)   // int4
-	w.int16(4)    // size
-	w.int32(-1)   // typmod
-	w.int16(0)    // text format
+	w.int32(100) // table oid
+	w.int16(1)   // attr
+	w.int32(23)  // int4
+	w.int16(4)   // size
+	w.int32(-1)  // typmod
+	w.int16(0)   // text format
 	w.string("name")
 	w.int32(0)
 	w.int16(0)

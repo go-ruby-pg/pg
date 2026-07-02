@@ -27,45 +27,45 @@ import (
 // Frontend message type bytes (the first byte of every frontend message except
 // the untyped StartupMessage / SSLRequest / CancelRequest).
 const (
-	msgBind        = 'B'
-	msgClose       = 'C'
-	msgCopyData    = 'd'
-	msgCopyDone    = 'c'
-	msgCopyFail    = 'f'
-	msgDescribe    = 'D'
-	msgExecute     = 'E'
-	msgFlush       = 'H'
-	msgFuncCall    = 'F'
-	msgParse       = 'P'
-	msgPassword    = 'p' // PasswordMessage / SASLInitialResponse / SASLResponse / GSSResponse
-	msgQuery       = 'Q'
-	msgSync        = 'S'
-	msgTerminate   = 'X'
+	msgBind      = 'B'
+	msgClose     = 'C'
+	msgCopyData  = 'd'
+	msgCopyDone  = 'c'
+	msgCopyFail  = 'f'
+	msgDescribe  = 'D'
+	msgExecute   = 'E'
+	msgFlush     = 'H'
+	msgFuncCall  = 'F'
+	msgParse     = 'P'
+	msgPassword  = 'p' // PasswordMessage / SASLInitialResponse / SASLResponse / GSSResponse
+	msgQuery     = 'Q'
+	msgSync      = 'S'
+	msgTerminate = 'X'
 )
 
 // Backend message type bytes.
 const (
-	msgAuthentication  = 'R'
-	msgBackendKeyData  = 'K'
-	msgBindComplete    = '2'
-	msgCloseComplete   = '3'
-	msgCommandComplete = 'C'
-	msgCopyBothResp    = 'W'
-	msgCopyInResp      = 'G'
-	msgCopyOutResp     = 'H'
-	msgDataRow         = 'D'
-	msgEmptyQuery      = 'I'
-	msgErrorResponse   = 'E'
-	msgFuncCallResp    = 'V'
-	msgNoData          = 'n'
-	msgNoticeResponse  = 'N'
-	msgNotification    = 'A'
+	msgAuthentication   = 'R'
+	msgBackendKeyData   = 'K'
+	msgBindComplete     = '2'
+	msgCloseComplete    = '3'
+	msgCommandComplete  = 'C'
+	msgCopyBothResp     = 'W'
+	msgCopyInResp       = 'G'
+	msgCopyOutResp      = 'H'
+	msgDataRow          = 'D'
+	msgEmptyQuery       = 'I'
+	msgErrorResponse    = 'E'
+	msgFuncCallResp     = 'V'
+	msgNoData           = 'n'
+	msgNoticeResponse   = 'N'
+	msgNotification     = 'A'
 	msgParamDescription = 't'
-	msgParameterStatus = 'S'
-	msgParseComplete   = '1'
-	msgPortalSuspended = 's'
-	msgReadyForQuery   = 'Z'
-	msgRowDescription  = 'T'
+	msgParameterStatus  = 'S'
+	msgParseComplete    = '1'
+	msgPortalSuspended  = 's'
+	msgReadyForQuery    = 'Z'
+	msgRowDescription   = 'T'
 )
 
 // Authentication sub-request codes (the int32 that follows an 'R' message).
@@ -124,7 +124,7 @@ type writeBuf struct {
 	b []byte
 }
 
-func (w *writeBuf) byte(v byte)  { w.b = append(w.b, v) }
+func (w *writeBuf) byte(v byte)    { w.b = append(w.b, v) }
 func (w *writeBuf) bytes(v []byte) { w.b = append(w.b, v...) }
 
 func (w *writeBuf) int16(v int16) {

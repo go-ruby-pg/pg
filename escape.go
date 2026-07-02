@@ -15,7 +15,7 @@ func EscapeString(s string) string {
 }
 
 // EscapeLiteral wraps s in single quotes, doubling embedded quotes, mirroring
-// PG::Connection#escape_literal. If s contains a backslash, an E'' escape-string
+// PG::Connection#escape_literal. If s contains a backslash, an E” escape-string
 // prefix is emitted and backslashes are doubled, exactly as libpq does to remain
 // correct regardless of the standard_conforming_strings setting.
 func EscapeLiteral(s string) string {

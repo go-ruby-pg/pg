@@ -50,11 +50,11 @@ const SCRAMMechanism = "SCRAM-SHA-256"
 // server-first message to Final to obtain the client-final message
 // (SASLResponse), then verify the server-final message with Verify.
 type SCRAMClient struct {
-	user         string
-	password     string
-	clientNonce  string
-	firstBare    string // client-first-message-bare (without the gs2 header)
-	serverSig    []byte // computed in Final, checked in Verify
+	user        string
+	password    string
+	clientNonce string
+	firstBare   string // client-first-message-bare (without the gs2 header)
+	serverSig   []byte // computed in Final, checked in Verify
 }
 
 // gs2Header is the channel-binding-unsupported GS2 header ("n,,").

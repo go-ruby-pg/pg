@@ -51,9 +51,9 @@ func TestEncodeParamScalars(t *testing.T) {
 
 func TestEncodeParamFloatSpecials(t *testing.T) {
 	for in, want := range map[float64]string{
-		math.NaN():     "NaN",
-		math.Inf(1):    "Infinity",
-		math.Inf(-1):   "-Infinity",
+		math.NaN():   "NaN",
+		math.Inf(1):  "Infinity",
+		math.Inf(-1): "-Infinity",
 	} {
 		got, _ := EncodeParam(in)
 		if string(got) != want {

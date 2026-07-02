@@ -216,9 +216,6 @@ func decodeArrayBin(elem OID, raw []byte) (any, error) {
 		}
 		flat = append(flat, v)
 	}
-	if r.fail() {
-		return nil, r.err
-	}
 	return reshape(flat, dims), nil
 }
 

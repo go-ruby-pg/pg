@@ -5,24 +5,24 @@ import "testing"
 // badFrame frames a body that is internally inconsistent (declares more content
 // than it carries), so the matching Parse* returns a truncation error while
 // ReadMessage itself succeeds.
-func badRowDesc() []byte  { return frame('T', []byte{0, 2}) }         // says 2 fields, none follow
-func badDataRow() []byte  { return frame('D', []byte{0, 1, 0, 0, 0, 9}) } // 1 col len 9, no data
-func badCmd() []byte      { return frame('C', []byte("noterm")) }    // no NUL
-func badError() []byte    { return frame('E', []byte("S")) }         // dangling code
-func badParamDesc() []byte { return frame('t', []byte{0, 1}) }       // says 1 oid, none
-func badReady() []byte    { return frame('Z', nil) }                 // no status byte
+func badRowDesc() []byte   { return frame('T', []byte{0, 2}) }             // says 2 fields, none follow
+func badDataRow() []byte   { return frame('D', []byte{0, 1, 0, 0, 0, 9}) } // 1 col len 9, no data
+func badCmd() []byte       { return frame('C', []byte("noterm")) }         // no NUL
+func badError() []byte     { return frame('E', []byte("S")) }              // dangling code
+func badParamDesc() []byte { return frame('t', []byte{0, 1}) }             // says 1 oid, none
+func badReady() []byte     { return frame('Z', nil) }                      // no status byte
 
 // unexpected returns a framed message of a type the given cycle does not expect.
 func unexpected() []byte { return frame('K', []byte{0, 0, 0, 0, 0, 0, 0, 0}) }
 
 func TestCollectResultErrorBranches(t *testing.T) {
 	cases := map[string][]byte{
-		"bad row desc":  badRowDesc(),
-		"bad data row":  concat(rowDescInt4("n"), badDataRow()),
-		"bad cmd":       concat(rowDescInt4("n"), badCmd()),
-		"bad error":     badError(),
-		"unexpected":    concat(unexpected(), unexpected()),
-		"read cutoff":   rowDescInt4("n"), // stream ends, nextSignificant read fails
+		"bad row desc": badRowDesc(),
+		"bad data row": concat(rowDescInt4("n"), badDataRow()),
+		"bad cmd":      concat(rowDescInt4("n"), badCmd()),
+		"bad error":    badError(),
+		"unexpected":   concat(unexpected(), unexpected()),
+		"read cutoff":  rowDescInt4("n"), // stream ends, nextSignificant read fails
 	}
 	for name, backend := range cases {
 		c := NewConn(newScript(backend))

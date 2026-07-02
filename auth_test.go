@@ -36,12 +36,12 @@ func md5Reference(user, pw string, salt []byte) string {
 // deterministic exchange, so the client can be verified end to end without a
 // live database.
 type scramServer struct {
-	password   string
-	salt       []byte
-	iters      int
-	nonce      string // server nonce suffix
-	authMsg    string
-	serverKey  []byte
+	password  string
+	salt      []byte
+	iters     int
+	nonce     string // server nonce suffix
+	authMsg   string
+	serverKey []byte
 }
 
 func (s *scramServer) firstMessage(clientFirst []byte) []byte {
